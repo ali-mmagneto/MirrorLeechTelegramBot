@@ -1,5 +1,5 @@
 ## Basic Deploy:
-- make you sure youre on heroku branch now. [click to go heroku branch](https://github.com/HuzunluArtemis/MirrorLeechTelegramBot)
+- make you sure youre on heroku branch now. [click to go heroku branch](https://github.com/ali-mmagneto/MirrorLeechTelegramBot)
 - click use this template
 - give a nice name
 - click private
