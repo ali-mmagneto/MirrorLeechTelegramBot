@@ -177,3 +177,36 @@ def get_media_info(path):
         artist = None
 
     return duration, artist, title
+
+def get_media_streams(path):
+
+    is_video = False
+    is_audio = False
+
+    mime_type = get_mime_type(path)
+    if mime_type.startswith('audio'):
+        is_audio = True
+        return is_video, is_audio
+
+    if not mime_type.startswith('video'):
+        return is_video, is_audio
+
+    try:
+        result = check_output(["ffprobe", "-hide_banner", "-loglevel", "error", "-print_format",
+                               "json", "-show_streams", path]).decode('utf-8')
+    except Exception as e:
+        LOGGER.error(f'{e}. Mostly file not found!')
+        return is_video, is_audio
+
+    fields = jsonloads(result).get('streams')
+    if fields is None:
+        LOGGER.error(f"get_media_streams: {result}")
+        return is_video, is_audio
+
+    for stream in fields:
+        if stream.get('codec_type') == 'video':
+            is_video = True
+        elif stream.get('codec_type') == 'audio':
+            is_audio = True
+
+    return is_video, is_audio
