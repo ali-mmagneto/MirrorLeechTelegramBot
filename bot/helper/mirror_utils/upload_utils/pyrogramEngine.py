@@ -53,7 +53,7 @@ class TgUploader:
                 self.__upload_file(up_path, file_, dirpath)
                 if self.__is_cancelled:
                     return
-                self.__msgs_dict[file_] = self.__sent_msg.message_id
+                self.__msgs_dict[file_] = self.__sent_msg.id
                 self._last_uploaded = 0
                 sleep(1)
         if len(self.__msgs_dict) <= self.__corrupted:
@@ -63,7 +63,7 @@ class TgUploader:
 
     def __upload_file(self, up_path, file_, dirpath):
         if self.__sent_msg == '': self.__sent_msg = app.get_messages(self.__listener.message.chat.id, self.__listener.uid)
-        else: self.__sent_msg = app.get_messages(self.__sent_msg.chat.id, self.__sent_msg.message_id)
+        else: self.__sent_msg = app.get_messages(self.__sent_msg.chat.id, self.__sent_msg.id)
         keption = DOWNLOAD_DIR
         if not keption.endswith('/'): keption = keption + '/'
         if not keption.startswith('/'): keption = '/' + keption
