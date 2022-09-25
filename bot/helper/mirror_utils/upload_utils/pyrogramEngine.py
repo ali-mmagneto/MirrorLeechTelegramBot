@@ -19,6 +19,7 @@ IMAGE_SUFFIXES = ("JPG", "JPX", "PNG", "WEBP", "CR2", "TIF", "BMP", "JXR", "PSD"
 
 
 class TgUploader:
+
     def __init__(self, name=None, listener=None):
         self.name = name
         self.uploaded_bytes = 0
@@ -189,4 +190,4 @@ class TgUploader:
     def cancel_download(self):
         self.__is_cancelled = True
         LOGGER.info(f"Cancelling Upload: {self.name}")
-        self.__listener.onUploadError('your upload has been stopped.') 
+        self.__listener.onUploadError('your upload has been stopped.')
