@@ -41,3 +41,42 @@ urllib3
 waybackpy
 xattr
 yt-dlp
+anytree
+aria2p
+asyncio
+beautifulsoup4
+bencoding
+cfscrape
+feedparser
+flask
+google-api-python-client
+google-auth-httplib2
+google-auth-oauthlib
+gunicorn
+lk21
+lxml
+pillow
+psutil
+psycopg2-binary
+pybase64
+pyrogram
+python-dotenv
+python-magic
+python-telegram-bot
+qbittorrent-api
+requests
+tenacity
+tgCrypto
+xattr
+yt-dlp
+Footer
+© 2022 GitHub, Inc.
+Footer navigation
+Terms
+Privacy
+Security
+Status
+Docs
+Contact GitHub
+Pricing
+API
