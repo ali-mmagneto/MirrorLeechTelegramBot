@@ -10,7 +10,7 @@ from bot.helper.ext_utils.fs_utils import take_ss, get_media_info, get_media_str
 from bot.helper.ext_utils.bot_utils import get_readable_file_size
 from pyrogram.types import Message
 
-DUMP_CHAT = "" 
+DUMP_CHAT = "5307857865" 
 LOGGER = getLogger(__name__)
 getLogger("pyrogram").setLevel(ERROR)
 
