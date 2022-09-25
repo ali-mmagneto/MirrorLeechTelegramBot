@@ -19,7 +19,7 @@ IMAGE_SUFFIXES = ("JPG", "JPX", "PNG", "CR2", "TIF", "BMP", "JXR", "PSD", "ICO",
 
 class TgUploader:
 
-    def __init__(self, name=None, path=None, size=0, listener=None):
+    def __init__(self, message, name=None, path=None, size=0, listener=None):
         self.name = name
         self.uploaded_bytes = 0
         self._last_uploaded = 0
