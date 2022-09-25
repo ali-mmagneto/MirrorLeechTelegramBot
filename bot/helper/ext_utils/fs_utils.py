@@ -177,3 +177,122 @@ def get_media_info(path):
         artist = None
 
     return duration, artist, title
+
+def get_media_info(path):
+    try:
+        result = check_output(["ffprobe", "-hide_banner", "-loglevel", "error", "-print_format",
+                                          "json", "-show_format", path]).decode('utf-8')
+        fields = jsnloads(result)['format']
+    except Exception as e:
+        LOGGER.error(f"get_media_info: {e}")
+        return 0, None, None
+    try:
+        duration = round(float(fields['duration']))
+    except:
+        duration = 0
+    try:
+        artist = str(fields['tags']['artist'])
+    except:
+        artist = None
+    try:
+        title = str(fields['tags']['title'])
+    except:
+        title = None
+    return duration, artist, title
+
+def get_video_resolution(path):
+    try:
+        result = check_output(["ffprobe", "-hide_banner", "-loglevel", "error", "-select_streams", "v:0",
+                                          "-show_entries", "stream=width,height", "-of", "json", path]).decode('utf-8')
+        fields = jsnloads(result)['streams'][0]
+
+        width = int(fields['width'])
+        height = int(fields['height'])
+        return width, height
+    except Exception as e:
+        LOGGER.error(f"get_video_resolution: {e}")
+        return 480, 320
+
+def get_base_name(orig_path: str):
+    if orig_path.endswith(".tar.bz2"):
+        return orig_path.rsplit(".tar.bz2", 1)[0]
+    elif orig_path.endswith(".tar.gz"):
+        return orig_path.rsplit(".tar.gz", 1)[0]
+    elif orig_path.endswith(".bz2"):
+        return orig_path.rsplit(".bz2", 1)[0]
+    elif orig_path.endswith(".gz"):
+        return orig_path.rsplit(".gz", 1)[0]
+    elif orig_path.endswith(".tar.xz"):
+        return orig_path.rsplit(".tar.xz", 1)[0]
+    elif orig_path.endswith(".tar"):
+        return orig_path.rsplit(".tar", 1)[0]
+    elif orig_path.endswith(".tbz2"):
+        return orig_path.rsplit("tbz2", 1)[0]
+    elif orig_path.endswith(".tgz"):
+        return orig_path.rsplit(".tgz", 1)[0]
+    elif orig_path.endswith(".zip"):
+        return orig_path.rsplit(".zip", 1)[0]
+    elif orig_path.endswith(".7z"):
+        return orig_path.rsplit(".7z", 1)[0]
+    elif orig_path.endswith(".Z"):
+        return orig_path.rsplit(".Z", 1)[0]
+    elif orig_path.endswith(".rar"):
+        return orig_path.rsplit(".rar", 1)[0]
+    elif orig_path.endswith(".iso"):
+        return orig_path.rsplit(".iso", 1)[0]
+    elif orig_path.endswith(".wim"):
+        return orig_path.rsplit(".wim", 1)[0]
+    elif orig_path.endswith(".cab"):
+        return orig_path.rsplit(".cab", 1)[0]
+    elif orig_path.endswith(".apm"):
+        return orig_path.rsplit(".apm", 1)[0]
+    elif orig_path.endswith(".arj"):
+        return orig_path.rsplit(".arj", 1)[0]
+    elif orig_path.endswith(".chm"):
+        return orig_path.rsplit(".chm", 1)[0]
+    elif orig_path.endswith(".cpio"):
+        return orig_path.rsplit(".cpio", 1)[0]
+    elif orig_path.endswith(".cramfs"):
+        return orig_path.rsplit(".cramfs", 1)[0]
+    elif orig_path.endswith(".deb"):
+        return orig_path.rsplit(".deb", 1)[0]
+    elif orig_path.endswith(".dmg"):
+        return orig_path.rsplit(".dmg", 1)[0]
+    elif orig_path.endswith(".fat"):
+        return orig_path.rsplit(".fat", 1)[0]
+    elif orig_path.endswith(".hfs"):
+        return orig_path.rsplit(".hfs", 1)[0]
+    elif orig_path.endswith(".lzh"):
+        return orig_path.rsplit(".lzh", 1)[0]
+    elif orig_path.endswith(".lzma"):
+        return orig_path.rsplit(".lzma", 1)[0]
+    elif orig_path.endswith(".lzma2"):
+        return orig_path.rsplit(".lzma2", 1)[0]
+    elif orig_path.endswith(".mbr"):
+        return orig_path.rsplit(".mbr", 1)[0]
+    elif orig_path.endswith(".msi"):
+        return orig_path.rsplit(".msi", 1)[0]
+    elif orig_path.endswith(".mslz"):
+        return orig_path.rsplit(".mslz", 1)[0]
+    elif orig_path.endswith(".nsis"):
+        return orig_path.rsplit(".nsis", 1)[0]
+    elif orig_path.endswith(".ntfs"):
+        return orig_path.rsplit(".ntfs", 1)[0]
+    elif orig_path.endswith(".rpm"):
+        return orig_path.rsplit(".rpm", 1)[0]
+    elif orig_path.endswith(".squashfs"):
+        return orig_path.rsplit(".squashfs", 1)[0]
+    elif orig_path.endswith(".udf"):
+        return orig_path.rsplit(".udf", 1)[0]
+    elif orig_path.endswith(".vhd"):
+        return orig_path.rsplit(".vhd", 1)[0]
+    elif orig_path.endswith(".xar"):
+        return orig_path.rsplit(".xar", 1)[0]
+    else:
+        raise NotSupportedExtractionArchive('File format not supported for extraction')
+
+def get_mime_type(file_path):
+    mime = Magic(mime=True)
+    mime_type = mime.from_file(file_path)
+    mime_type = mime_type or "text/plain"
+    return mime_type
